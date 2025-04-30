@@ -1,10 +1,22 @@
 import { Image, StatusBar, StyleSheet, Text, View } from "react-native";
 import { Button } from "../components/button";
+import { useEffect, useState } from "react";
+import { getUSD } from "../service/awesome-api";
 
 export default function Screen() {
-    const updateCurrency = () => {
-        console.log("Atualizando o valor do dólar...");
+    const [loading, setLoading] = useState(true);
+    const [currentValue, setCurrentValue] = useState<number>(0);
+
+    const updateCurrency = async () => {
+        setLoading(true);
+        const dolar = await getUSD();
+        setLoading(false);
+        setCurrentValue(dolar);
     };
+
+    useEffect(() => {
+        updateCurrency();
+    }, []);
     return (
         <View style={styles.container}>
             <StatusBar barStyle="light-content" />
@@ -13,9 +25,16 @@ export default function Screen() {
                 style={styles.logo}
                 resizeMode="contain"
             />
-            <Text style={styles.h2}>O dólar americano está:</Text>
-            <Text style={styles.currencyText}>R$ 5,00</Text>
-            <Button label="Atualizar" onPress={updateCurrency} />
+            {loading && <Text style={styles.h2}>Carregando...</Text>}
+            {!loading && (
+                <>
+                    <Text style={styles.h2}>O dólar americano está:</Text>
+                    <Text style={styles.currencyText}>
+                        R$ {currentValue.toFixed(2)}
+                    </Text>
+                    <Button label="Atualizar" onPress={updateCurrency} />
+                </>
+            )}
         </View>
     );
 }
