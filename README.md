@@ -1,17 +1,11 @@
-# Aplicativo de Loja
+# Aplicativo de Cotação de Moedas
 
 ## Estrutura de telas do aplicativo
 
 ```bash
 Main Drawer
-├── Index
-├── (tabs)
-│   ├── Inicio
-│   ├── Stack Categorias
-│   │   ├── Listagem de categorias
-│   │   └── Listagem de produtos de uma categoria
-│   └── Sobre Mim
-└── Produto Único
+├── Dólar Americano
+├── Euro
 ```
 
 ## Comandos utilizados durante o projeto
